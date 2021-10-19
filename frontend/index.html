@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+
+   <body>
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+         <div class="container-lg">
+            <a class="navbar-brand" href="#">
+               <img src="ziruda.png" alt="ziruda by ghibran" width="70" srcset="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav ms-auto d-flex"  >
+                  <li class="nav-item disabled" id="user-status" >
+                     
+                     <p class="nav-link "><img src="personPlaceholder.jpg" alt="person" id="user-pic" class="rounded-circle me-1 " width="30px"> Username </p>
+                  </li>
+                  <li class="nav-item" >
+                     <a href="#" class="nav-link" id="login-anchor" >Login</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+
+
+
+      <div class="container mt-5 p-md-0 p-2">
+         <div class="row">
+
+            <!--  -->
+            <div class="col-12 col-md-3 order-1  mb-3 text-center text-md-start">
+               <div class="navigation">
+                  <h1 class="display-5">Ziruda</h1>
+                  <ul class="list-group border-0 list-group-flush">
+                     <li class="list-group-item  active"><a>Home</a>
+                     </li>
+                     <li class="list-group-item "><a>About Ziruda</a></li>
+                     <li class="list-group-item "><a>Content whithout matches</a></li>
+                  </ul>
+               </div>
+            </div>
+            <!--  -->
+            <div class="col-12 col-md-6 feed p-0 order-3 order-md-2" id="feed">
+               <div class="post rounded shadow align-center">
+                  <div class="pic-section m-0" id='pic-section'>
+                     <img src="picPlaceholder.jpg" alt="pic" srcset="">
+                  </div>
+                  <div class="text-section rounded-top row pt-3 pb-3">
+                     <div class="col-1 vote"></div>
+                     <div class="col-10">
+                        <div class="top row">
+                           <p class="h3 col-10">This is the title</p>
+                           <div class="col-2 text-center d-flex flex-row toggle" id="picture-toggle">
+                              <i class="bi bi-chevron-down ms-1 h3"></i>
+                           </div>
+                        </div>
+                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, debitis
+                           perferendis eos
+                           laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde doloremque
+                           nulla
+                           quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum facere.
+                        </p>
+                        <hr>
+                        <div class="creator-section row">
+                           <div class="col-12 col-lg-6">
+                              <small>Poetry by </small>
+                              <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
+                              <small class="poet-name">Poet's Name</small>
+                           </div>
+                           <div class="col-12 col-lg-6">
+                              <small class=""> Picture by</small>
+                              <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
+                              <small class="poet-name">Painter's Name</small>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-1"></div>
+                  </div>
+               </div>
+
+            </div>
+            <!--  -->
+            <div class="col-12 col-md-3 order-2 order-md-3">
+               <div class="post-section shadow p-3">
+                  <h4 class="text-muted">Post Something</h4>
+                  <a href="" class="btn btn-outline-primary post-btn"> Post a poetry</a>
+                  <a href="" class="btn btn-outline-danger post-btn"> Post a Picture</a>
+
+               </div>
+            </div>
+         </div>
+
+
+
+
+
+
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+         <script>
+            const config = {
+               apiKey: "AIzaSyC9Bb__n0bLn3GOxEIthCnc_2pEDRUsfNk",
+               authDomain: "projectverknupfung.firebaseapp.com",
+               projectId: "projectverknupfung",
+               storageBucket: "projectverknupfung.appspot.com",
+               messagingSenderId: "327702661691",
+               appId: "1:327702661691:web:ad2e907f34cc9e147c2a1e",
+               measurementId: "G-9E6TNSMYZ1"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(config)
+            const auth = firebase.auth()
+            const test = 3.14159
+            console.log(test)
+         </script>
+
+         <script src="script/auth.js"></script>
+         <script src="script/index.js"></script>
+
+   </body>
+
+</html>
