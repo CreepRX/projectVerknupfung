@@ -40,73 +40,100 @@
 
 
 
-      <div class="container mt-5 p-md-0 p-2">
+      <div class="container main mt-5 p-md-0 p-2">
+         <div class="mobile-title text-center">
+            <p class="display-1">Ziruda</p>
+         </div>
          <div class="row">
 
-            <!--  -->
-            <div class="col-12 col-md-3 order-1  mb-3 text-center text-md-start">
+            <!-- this is the navigations  -->
+            <div class="col-12 col-md-3 order-2  mb-3 text-center text-md-start mt-md-5">
                <div class="navigation">
                   <h1 class="display-5">Ziruda</h1>
-                  <ul class="list-group border-0 list-group-flush">
-                     <li class="list-group-item  active"><a>Home</a>
-                     </li>
-                     <li class="list-group-item "><a>About Ziruda</a></li>
-                     <li class="list-group-item "><a>Content whithout matches</a></li>
-                  </ul>
+                  <div class="list-group list-group-horizontal">
+                     <a href="#list-feed" class="list-group-item list-group-item-action active" id="list-feed-list" data-bs-toggle="list" role="tab" onclick="loadFeed()">Home</a>
+                     <a href="#list-about" class="list-group-item list-group-item-action"  id="list-about-list" data-bs-toggle="list" role="tab" onclick="loadAbout()">About Ziruda</a>
+                     <a href="#list-noPics" class="list-group-item list-group-item-action" id='list-noPics-list' data-bs-toggle="list" role="tab" onclick="loadMissingPics()">Missing Pics</a>
+                  </div>
                </div>
             </div>
-            <!--  -->
-            <div class="col-12 col-md-6 feed p-0 order-3 order-md-2" id="feed">
-               <div class="post rounded shadow align-center">
-                  <div class="pic-section m-0" id='pic-section'>
-                     <img src="picPlaceholder.jpg" alt="pic" srcset="">
+            <!-- this is the content -->
+            <div class="col-12 col-md-6 feed p-3 order-3 order-md-2" id="feed">
+
+               <!-- tabs -->
+               <div class="tab-content text-center text-md-start" id="nav-tabContent">
+                  <!-- Feed -->
+                  <div class="tab-pane fade show active" id="list-feed" role="tabpanel" aria-labelledby="list-feed-list">
+                     <p class="display-4">Your Feed</p>
                   </div>
-                  <div class="text-section rounded-top row pt-3 pb-3">
-                     <div class="col-1 vote"></div>
-                     <div class="col-10">
-                        <div class="top row">
-                           <p class="h3 col-10">This is the title</p>
-                           <div class="col-2 text-center d-flex flex-row toggle" id="picture-toggle">
-                              <i class="bi bi-chevron-down ms-1 h3"></i>
-                           </div>
-                        </div>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, debitis
-                           perferendis eos
-                           laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde doloremque
-                           nulla
-                           quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum facere.
-                        </p>
-                        <hr>
-                        <div class="creator-section row">
-                           <div class="col-12 col-lg-6">
-                              <small>Poetry by </small>
-                              <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
-                              <small class="poet-name">Poet's Name</small>
-                           </div>
-                           <div class="col-12 col-lg-6">
-                              <small class=""> Picture by</small>
-                              <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
-                              <small class="poet-name">Painter's Name</small>
-                           </div>
-                        </div>
+                  <!-- About Us -->
+                  <div class="tab-pane fade" id="list-about" role="tabpanel" aria-labelledby="list-about-list"><p class="display-4">About Us</p></div>
+                  <!-- No pics -->
+                  <div class="tab-pane fade" id="list-noPics" role="tabpanel" aria-labelledby="list-noPics-list"><p class="display-4">Poetry Without Pics</p></div>
+                </div>
+                            
+               <!-- contents -->
+               <div class="content" id="content">
+                  <div class="post rounded shadow align-center">
+                     <div class="pic-section m-0 rounded-top" id='pic-section'>
+                        <img src="picPlaceholder.jpg" alt="pic" srcset="">
                      </div>
-                     <div class="col-1"></div>
+                     <div class="text-section rounded-top row pt-3 pb-3">
+                        <div class="col-1 vote text-center">
+                           <a href="#" class="upvote">
+                              <i class="bi bi-caret-up" id="upvote"></i>
+                           </a>
+                           <small id="total-vote">25</small>
+                           <a href="" class="downvote">
+                              <i class="bi bi-caret-down" id="downvote"></i>
+                           </a>
+                        </div>
+                        <div class="col-10">
+                           <div class="top row">
+                              <p class="h3 col-10">This is the title</p>
+                              <div class="col-2 text-center d-flex flex-row toggle" id="picture-toggle">
+                                 <i class="bi bi-chevron-down ms-1 h3"></i>
+                              </div>
+                           </div>
+                           <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, debitis
+                              perferendis eos
+                              laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde doloremque
+                              nulla
+                              quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum facere.
+                           </p>
+                           <hr>
+                           <div class="creator-section row">
+                              <div class="col-12 col-lg-6">
+                                 <small>Poetry by </small>
+                                 <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
+                                 <small class="poet-name">Poet's Name</small>
+                              </div>
+                              <div class="col-12 col-lg-6">
+                                 <small class=""> Picture by</small>
+                                 <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
+                                 <small class="poet-name">Painter's Name</small>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-1"></div>
+                     </div>
                   </div>
                </div>
 
             </div>
-            <!--  -->
-            <div class="col-12 col-md-3 order-2 order-md-3">
-               <div class="post-section shadow p-3">
-                  <h4 class="text-muted">Post Something</h4>
+            
+
+            <!-- this is the post section -->
+            <div class="col-12 col-md-3 order-1 order-md-3 mt-md-5">
+               <div class="post-section shadow-md rounded p-3 text-center text-md-start">
+                  <h4 class="text-muted md">Post Something</h4>
                   <a href="" class="btn btn-outline-primary post-btn"> Post a poetry</a>
                   <a href="" class="btn btn-outline-danger post-btn"> Post a Picture</a>
-
+                  <hr class="md-none">
                </div>
+               
             </div>
          </div>
-
-
 
 
 
