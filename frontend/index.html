@@ -24,13 +24,15 @@
                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="navbar-nav ms-auto d-flex"  >
+               <ul class="navbar-nav ms-auto d-flex mt-4"  >
                   <li class="nav-item disabled" id="user-status" >
-                     
-                     <p class="nav-link "><img src="personPlaceholder.jpg" alt="person" id="user-pic" class="rounded-circle me-1 " width="30px"> Username </p>
+                     <p class="nav-link"><img src="personPlaceholder.jpg" id="user-pic" class="rounded-circle me-1 " width="30px"> <span id="user-name">Username</span> </p>
                   </li>
                   <li class="nav-item" >
-                     <a href="#" class="nav-link" id="login-anchor" >Login</a>
+                     <a href="#" class="nav-link p-0 mb-3" id="login-anchor" >Login</a>
+                  </li>
+                  <li class="nav-item disabled" >
+                     <a href="#" class="nav-link" id="logout-anchor" >Logout</a>
                   </li>
                </ul>
             </div>
@@ -158,8 +160,6 @@
             // Initialize Firebase
             firebase.initializeApp(config)
             const auth = firebase.auth()
-            const test = 3.14159
-            console.log(test)
          </script>
 
          <script src="script/auth.js"></script>
