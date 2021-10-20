@@ -24,22 +24,21 @@
                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="navbar-nav ms-auto d-flex mt-4"  >
-                  <li class="nav-item disabled" id="user-status" >
-                     <p class="nav-link"><img src="personPlaceholder.jpg" id="user-pic" class="rounded-circle me-1 " width="30px"> <span id="user-name">Username</span> </p>
+               <ul class="navbar-nav ms-auto d-flex mt-4">
+                  <li class="nav-item disabled" id="user-status">
+                     <p class="nav-link"><img src="personPlaceholder.jpg" id="user-pic" class="rounded-circle me-1 "
+                           width="30px"> <span id="user-name">Username</span> </p>
                   </li>
-                  <li class="nav-item" >
-                     <a href="#" class="nav-link p-0 mb-3" id="login-anchor" >Login</a>
+                  <li class="nav-item">
+                     <a href="#" class="nav-link p-0 mb-3" id="login-anchor">Login</a>
                   </li>
-                  <li class="nav-item disabled" >
-                     <a href="#" class="nav-link" id="logout-anchor" >Logout</a>
+                  <li class="nav-item disabled">
+                     <a href="#" class="nav-link" id="logout-anchor">Logout</a>
                   </li>
                </ul>
             </div>
          </div>
       </nav>
-
-
 
 
       <div class="container main mt-5 p-md-0 p-2">
@@ -53,9 +52,12 @@
                <div class="navigation">
                   <h1 class="display-5">Ziruda</h1>
                   <div class="list-group list-group-horizontal">
-                     <a href="#list-feed" class="list-group-item list-group-item-action active" id="list-feed-list" data-bs-toggle="list" role="tab" onclick="loadFeed()">Home</a>
-                     <a href="#list-about" class="list-group-item list-group-item-action"  id="list-about-list" data-bs-toggle="list" role="tab" onclick="loadAbout()">About Ziruda</a>
-                     <a href="#list-noPics" class="list-group-item list-group-item-action" id='list-noPics-list' data-bs-toggle="list" role="tab" onclick="loadMissingPics()">Missing Pics</a>
+                     <a href="#list-feed" class="list-group-item list-group-item-action active" id="list-feed-list"
+                        data-bs-toggle="list" role="tab" onclick="loadFeed()">Home</a>
+                     <a href="#list-about" class="list-group-item list-group-item-action" id="list-about-list"
+                        data-bs-toggle="list" role="tab" onclick="loadAbout()">About Ziruda</a>
+                     <a href="#list-noPics" class="list-group-item list-group-item-action" id='list-noPics-list'
+                        data-bs-toggle="list" role="tab" onclick="loadMissingPics()">Missing Pics</a>
                   </div>
                </div>
             </div>
@@ -65,15 +67,20 @@
                <!-- tabs -->
                <div class="tab-content text-center text-md-start" id="nav-tabContent">
                   <!-- Feed -->
-                  <div class="tab-pane fade show active" id="list-feed" role="tabpanel" aria-labelledby="list-feed-list">
+                  <div class="tab-pane fade show active" id="list-feed" role="tabpanel"
+                     aria-labelledby="list-feed-list">
                      <p class="display-4">Your Feed</p>
                   </div>
                   <!-- About Us -->
-                  <div class="tab-pane fade" id="list-about" role="tabpanel" aria-labelledby="list-about-list"><p class="display-4">About Us</p></div>
+                  <div class="tab-pane fade" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
+                     <p class="display-4">About Us</p>
+                  </div>
                   <!-- No pics -->
-                  <div class="tab-pane fade" id="list-noPics" role="tabpanel" aria-labelledby="list-noPics-list"><p class="display-4">Poetry Without Pics</p></div>
-                </div>
-                            
+                  <div class="tab-pane fade" id="list-noPics" role="tabpanel" aria-labelledby="list-noPics-list">
+                     <p class="display-4">Poetry Without Pics</p>
+                  </div>
+               </div>
+
                <!-- contents -->
                <div class="content" id="content">
                   <div class="post rounded shadow align-center">
@@ -99,9 +106,11 @@
                            </div>
                            <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, debitis
                               perferendis eos
-                              laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde doloremque
+                              laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde
+                              doloremque
                               nulla
-                              quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum facere.
+                              quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum
+                              facere.
                            </p>
                            <hr>
                            <div class="creator-section row">
@@ -121,21 +130,77 @@
                      </div>
                   </div>
                </div>
-
             </div>
-            
+
 
             <!-- this is the post section -->
             <div class="col-12 col-md-3 order-1 order-md-3 mt-md-5">
                <div class="post-section shadow-md rounded p-3 text-center text-md-start">
                   <h4 class="text-muted md">Post Something</h4>
-                  <a href="" class="btn btn-outline-primary post-btn"> Post a poetry</a>
-                  <a href="" class="btn btn-outline-danger post-btn"> Post a Picture</a>
+                  <button type='button' data-bs-toggle="modal" class="btn btn-outline-primary post-btn"
+                     id="poetry-post-btn"> Post a poetry</button>
+                  <button type="button" data-bs-toggle="modal" class="btn btn-outline-danger post-btn"
+                     data-bs-target="#picture-modal"> Post a Picture</button>
                   <hr class="md-none">
                </div>
-               
+
             </div>
          </div>
+
+         <!-- poetry Modal -->
+         <div class="modal fade modal-fullscreen-md-down" id="poetry-modal" aria-labelledby="poetry-modal-title">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h2 class="modal-title lead" id="poetry-modal-title"> Post your awesome poetry</h2>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                     <form id="poetry-form">
+                        <div class="mb-3">
+                           <!-- <label for="exampleInputEmail1" class="form-label">Title</label> -->
+                           <input type="text" name="title" id="poetry-title" class="form-control" placeholder="Title">
+                        </div>
+                        <div class="mb-3">
+                           <textarea name="content" id="poetry-content" cols="30" rows="10" class="form-control"
+                              placeholder=""></textarea>
+                        </div>
+                        <select name="mood" id="poetry-mood-select" class="form-select">
+                           <option value="" selected>Select the mood of your poetry</option>
+                           <div id="mood-list">
+                              <option value="sad">Sad</option>
+                              <option value="happy">Happy</option>
+                              <option value="terrifying">Terrifying</option>
+                           </div>
+                        </select>
+                        <p class="form-text color-danger" class='error-msg'></p>
+
+                        <div class="mt-3">
+                           <button type="submit" class="btn btn-primary" id='poetry-submit'>Submit</button>
+                           <button type="reset" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- login alert Modal -->
+         <div class="modal fade" id="login-alert-modal">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h2 class="modal-title lead"> You need to login</h2>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                     You need to login before you can post poetries or pictures
+                  </div>
+               </div>
+            </div>
+         </div>
+
 
 
 
@@ -144,8 +209,10 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
          <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+         <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> -->
          <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
+
          <script>
             const config = {
                apiKey: "AIzaSyC9Bb__n0bLn3GOxEIthCnc_2pEDRUsfNk",
@@ -160,10 +227,18 @@
             // Initialize Firebase
             firebase.initializeApp(config)
             const auth = firebase.auth()
+            const func = firebase.app().functions('europe-west1');
+
+            if (location.hostname === "localhost") {
+               console.log("DEVELOPMENT MODE")
+               auth.useEmulator("http://localhost:9099");
+               func.useEmulator("localhost", 5001)
+            }
          </script>
 
          <script src="script/auth.js"></script>
          <script src="script/index.js"></script>
+         <script src="script/poetryUpload.js"></script>
 
    </body>
 

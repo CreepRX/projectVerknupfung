@@ -20,8 +20,6 @@ loginbutton.addEventListener('click', e =>{
 
 const usrStatus = document.querySelector('#user-status')
 
-console.log(usrStatus)
-
 
 const logoutbutton = document.querySelector('#logout-anchor')
 logoutbutton.addEventListener('click' , e => {
@@ -47,8 +45,6 @@ auth.onAuthStateChanged(user =>{
     const img = document.querySelector('#user-pic')
     const name = document.querySelector('#user-name')
     name.textContent = user.displayName
-    console.log(user)
-    console.log(img)
     img.src = user.photoURL
     img.srcset = user.photoURL
 
