@@ -36,6 +36,10 @@ exports.addPoetry = functions
     let mood = sanitizer.sanitize(data["mood"]);
     let time = new Date().getTime();
 
+
+    content = content.replace('\n', '</br>')
+    let poetUID = context.auth.uid;
+
     if (
       title === "" ||
       !title ||
@@ -55,15 +59,16 @@ exports.addPoetry = functions
       content: content,
       mood: mood,
       createdAt: time,
+      poetUID: poetUID,
     });
     return "OK";
   });
 
 exports.addUserToDB = functions.auth.user().onCreate((user) => {
-  admin.firestore().collection("users").add({
+  admin.firestore().collection("users").doc(user.uid).set({
     email: user.email,
-    uid: user.uid,
     profilePic: user.photoURL,
+    name: user.displayName,
   });
 });
 
@@ -73,17 +78,17 @@ exports.getPoetry = functions
     return admin
       .firestore()
       .collection("poetry")
-      .orderBy("createdAt",'desc')
+      .orderBy("createdAt", "desc")
       .limit(10)
       .get()
-      .then((res) => {
-        const datas = res.docs
-        let docs = []
-        for (var i in datas ) {
-            const doc = datas[i].data();
-            docs.push(doc)
+      .then((snapshots) => {
+        const snap = snapshots.docs;
+        let docs = [];
+        for (var i in snap) {
+          const doc = snap[i].data();
+          docs.push(doc);
         }
-        return docs
+        return docs;
       })
       .catch((err) => {
         throw new functions.https.HttpsError(
@@ -92,3 +97,22 @@ exports.getPoetry = functions
         );
       });
   });
+
+exports.getUser = functions
+  .region("europe-west1")
+  .https.onCall(async (data, context) => {
+
+    console.log(
+      data
+    )
+    
+  const ret = await admin.firestore().collection('users').doc(data['UID']).get().then(
+    snap => {
+      return snap.data()
+    }
+  )
+    return ret
+  });
+
+
+

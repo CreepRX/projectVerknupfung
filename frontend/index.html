@@ -83,52 +83,7 @@
 
                <!-- contents -->
                <div class="content" id="content">
-                  <div class="post rounded shadow align-center">
-                     <div class="pic-section m-0 rounded-top" id='pic-section'>
-                        <img src="picPlaceholder.jpg" alt="pic" srcset="">
-                     </div>
-                     <div class="text-section rounded-top row pt-3 pb-3">
-                        <div class="col-1 vote text-center">
-                           <a href="#" class="upvote">
-                              <i class="bi bi-caret-up" id="upvote"></i>
-                           </a>
-                           <small id="total-vote">25</small>
-                           <a href="" class="downvote">
-                              <i class="bi bi-caret-down" id="downvote"></i>
-                           </a>
-                        </div>
-                        <div class="col-10">
-                           <div class="top row">
-                              <p class="h3 col-10">This is the title</p>
-                              <div class="col-2 text-center d-flex flex-row toggle" id="picture-toggle">
-                                 <i class="bi bi-chevron-down ms-1 h3"></i>
-                              </div>
-                           </div>
-                           <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, debitis
-                              perferendis eos
-                              laudantium cumque enim excepturi corporis atque est consequuntur numquam vel unde
-                              doloremque
-                              nulla
-                              quibusdam non id quasi ex rem iure quaerat harum. Nemo possimus obcaecati vitae illum
-                              facere.
-                           </p>
-                           <hr>
-                           <div class="creator-section row">
-                              <div class="col-12 col-lg-6">
-                                 <small>Poetry by </small>
-                                 <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
-                                 <small class="poet-name">Poet's Name</small>
-                              </div>
-                              <div class="col-12 col-lg-6">
-                                 <small class=""> Picture by</small>
-                                 <img class="rounded-circle" src="personPlaceholder.jpg" width="30px">
-                                 <small class="poet-name">Painter's Name</small>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-1"></div>
-                     </div>
-                  </div>
+                  
                </div>
             </div>
 
@@ -173,13 +128,32 @@
                               <option value="terrifying">Terrifying</option>
                            </div>
                         </select>
-                        <p class="form-text color-danger" class='error-msg'></p>
+                        <p class="form-text text-danger" id='error-msg'></p>
 
                         <div class="mt-3">
                            <button type="submit" class="btn btn-primary" id='poetry-submit'>Submit</button>
                            <button type="reset" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
                         </div>
 
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- file upload modal -->
+         <div class="modal fade modal-fullscreen-md-down" id="picture-modal">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h2 class="modal-title lead" id="poetry-modal-title"> Upload your beautiful pic</h2>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                     <form id="file-upload-form">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        <input class="form-control" type="file" id="formFile">
                      </form>
                   </div>
                </div>
@@ -209,9 +183,10 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
          <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-         <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> -->
          <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
          <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
 
          <script>
             const config = {
@@ -221,19 +196,24 @@
                storageBucket: "projectverknupfung.appspot.com",
                messagingSenderId: "327702661691",
                appId: "1:327702661691:web:ad2e907f34cc9e147c2a1e",
-               measurementId: "G-9E6TNSMYZ1"
+               measurementId: "G-9E6TNSMYZ1",
+               storageBucket: 'projectVerknupfung.appspot.com.'
             };
 
             // Initialize Firebase
             firebase.initializeApp(config)
             const auth = firebase.auth()
             const func = firebase.app().functions('europe-west1');
+            const storage = firebase.storage()
 
             if (location.hostname === "localhost") {
                console.log("DEVELOPMENT MODE")
                auth.useEmulator("http://localhost:9099");
                func.useEmulator("localhost", 5001)
+               storage.useEmulator("localhost",9199)
             }
+
+            const storageRef = storage.ref();
          </script>
 
          <script src="script/auth.js"></script>

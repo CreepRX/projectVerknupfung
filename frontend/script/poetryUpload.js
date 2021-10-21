@@ -9,18 +9,19 @@ poetryForm.addEventListener('submit', e =>{
     let mood = poetryForm['mood'].value
     console.log(title +'\n'+ content+ '\n' + mood)
 
-    const helloWorld = func.httpsCallable("addPoetry")
+    const addPoetry = func.httpsCallable("addPoetry")
 
-    helloWorld(
+    addPoetry(
         {
             title : title,
             content : content,
             mood : mood,
         }
     ).then(res => {
-        console.log(res)
+        closePoetryModal()
     }).catch(err => {
-        console.log(err.message)
+        console.log(err)
+        errorMsg.innerHTML = err.message;
     })
 
 
