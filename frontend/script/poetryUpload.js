@@ -24,5 +24,4 @@ poetryForm.addEventListener('submit', e =>{
         errorMsg.innerHTML = err.message;
     })
 
-
 })

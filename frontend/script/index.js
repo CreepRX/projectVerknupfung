@@ -1,8 +1,5 @@
 // this is for the ui responsiveness
-
-
 const getUser = func.httpsCallable("getUser")
-
 
 const contentFeed = document.querySelector('#content')
 const loadFeed = async function(){
@@ -38,29 +35,6 @@ const expandPic = function(picID, chevronID){
 }
 
 let loginErrModal = new bootstrap.Modal(document.getElementById('login-alert-modal'))
-
-let poetryBtn = document.querySelector('#poetry-post-btn')
-let poetryModal = new bootstrap.Modal(document.getElementById('poetry-modal'),
-{
-    keyboard: false
-})
-
-poetryBtn.addEventListener('click' , event => {
-
-    if(localStorage.getItem('isLoggedIn') === 'false'){
-        loginErrModal.show()
-        return
-    }
-    event.preventDefault()
-    poetryModal.show()
-})
-
-const closePoetryModal = function(){
-   loadFeed();
-   poetryModal.hide()
-}
-
-
 
 const generatePost = function (title, content, poet){
     const imgURL = 'picPlaceholder.jpg'

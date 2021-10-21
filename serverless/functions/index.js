@@ -23,7 +23,6 @@ exports.addPoetry = functions
     if (!data) {
       throw new functions.https.HttpsError("invalid-argument", "data is null");
     }
-    functions.logger.info(data);
     if (!context.auth) {
       throw new functions.https.HttpsError(
         "unauthenticated",
@@ -36,8 +35,7 @@ exports.addPoetry = functions
     let mood = sanitizer.sanitize(data["mood"]);
     let time = new Date().getTime();
 
-
-    content = content.replace('\n', '</br>')
+    content = content.replace("\n", "</br>");
     let poetUID = context.auth.uid;
 
     if (
@@ -101,18 +99,53 @@ exports.getPoetry = functions
 exports.getUser = functions
   .region("europe-west1")
   .https.onCall(async (data, context) => {
-
-    console.log(
-      data
-    )
-    
-  const ret = await admin.firestore().collection('users').doc(data['UID']).get().then(
-    snap => {
-      return snap.data()
-    }
-  )
-    return ret
+    const ret = await admin
+      .firestore()
+      .collection("users")
+      .doc(data["UID"])
+      .get()
+      .then((snap) => {
+        return snap.data();
+      });
+    return ret;
   });
 
+exports.addPicture = functions
+  .region("europe-west1")
+  .https.onCall(async (data, context) => {
+    if (!data) {
+      throw new functions.https.HttpsError("invalid-argument", "data is null");
+    }
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "only authenticated users can add requests"
+      );
+    }
+    const owner = context.auth.uid;
+    const fileName = data["link"];
+    const mood = data["mood"];
+    let time = new Date().getTime();
 
+    if (
+      fileName === "" || !fileName === ""
+    ){
+      throw new functions.https.HttpsError("invalid-argument", "missing the link to file");
+    }
 
+    console.log (
+      owner, fileName, mood, time
+    )
+
+    if (mood === '' || !mood) {
+      throw new functions.https.HttpsError("invalid-argument", "data is null");
+    }
+    admin.firestore().collection("pictures").add({
+      fileName: fileName,
+      mood: mood,
+      createdAt: time,
+      ownerUID: owner,
+    });
+
+    return "OK"
+  });

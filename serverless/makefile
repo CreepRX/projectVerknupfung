@@ -1,3 +1,3 @@
 emulate:
-	setx GOOGLE_APPLICATION_CREDENTIALS "secretAPI.json"
+	setx GOOGLE_APPLICATION_CREDENTIALS "./secretKey.json"
 	firebase emulators:start
