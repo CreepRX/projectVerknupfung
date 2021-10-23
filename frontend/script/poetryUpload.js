@@ -19,6 +19,7 @@ poetryForm.addEventListener('submit', e =>{
         }
     ).then(res => {
         closePoetryModal()
+        poetryForm.reset()
     }).catch(err => {
         console.log(err)
         errorMsg.innerHTML = err.message;

@@ -3,13 +3,6 @@ const admin = require("firebase-admin");
 const sanitizer = require("sanitizer");
 const { array } = require("yargs");
 admin.initializeApp();
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 
 exports.helloWorld = functions
   .region("europe-west1")
@@ -127,17 +120,16 @@ exports.addPicture = functions
     const mood = data["mood"];
     let time = new Date().getTime();
 
-    if (
-      fileName === "" || !fileName === ""
-    ){
-      throw new functions.https.HttpsError("invalid-argument", "missing the link to file");
+    if (fileName === "" || !fileName === "") {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "missing the link to file"
+      );
     }
 
-    console.log (
-      owner, fileName, mood, time
-    )
+    console.log(owner, fileName, mood, time);
 
-    if (mood === '' || !mood) {
+    if (mood === "" || !mood) {
       throw new functions.https.HttpsError("invalid-argument", "data is null");
     }
     admin.firestore().collection("pictures").add({
@@ -147,5 +139,44 @@ exports.addPicture = functions
       ownerUID: owner,
     });
 
-    return "OK"
+    return "OK";
+  });
+
+exports.matchPicWithPoetry = functions.firestore
+  .document("pictures/{pictureID}")
+  .onCreate((snap, context) => {
+    const entry = snap.data();
+    // console.log("=====matching pic with poetry======");
+
+    const fileName = entry.fileName;
+    const mood = entry.mood;
+    const painter = entry.ownerUID;
+
+    const callback = function(id,data){
+      admin.firestore().collection('poetry').doc(id).update({
+        picture : fileName,
+        painterUID : painter,
+      })
+    }
+
+    admin
+      .firestore()
+      .collection("poetry")
+      .where("mood", "==", mood)
+      // .where("picture", "==", "")
+      .orderBy("createdAt", "asc")
+      .get()
+      .then((snaps) => {
+        // console.log("=====matching pic with poetry======");
+
+        snaps.forEach((doc) => {
+          const data = doc.data()
+          if (!data['picture'] || data['picture'] === ''){
+            callback(doc.id, data)
+            return
+          }
+        });
+      });
+
+    return "";
   });

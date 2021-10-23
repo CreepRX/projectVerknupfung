@@ -216,11 +216,12 @@
             const func = firebase.app().functions('europe-west1');
             const storage = firebase.storage()
 
-            if (location.hostname === "localhost") {
+            if (location.hostname === "localhost" ||location.hostname === "127.0.0.1" ) {
                console.log("DEVELOPMENT MODE")
                auth.useEmulator("http://localhost:9099");
-               func.useEmulator("localhost", 5001)
-               storage.useEmulator("localhost", 9199)
+               func.useEmulator("localhost","5001");
+               // storage.useEmulator("http://localhost:9199");
+               storage.useEmulator("localhost","9199");
             }
 
             const storageRef = storage.ref();
