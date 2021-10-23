@@ -10,10 +10,12 @@ pictureForm.addEventListener("submit", async (event) => {
   const file = pictureForm["picFile"].files[0];
   const mood = pictureForm["mood"].value;
 
+  const ext = (pictureForm['picFile'].value + '').split('.').pop()
+
   const addPicture = func.httpsCallable("addPicture");
 
   const callback = async (h) => {
-    const fileName = `pictures/${h}`;
+    const fileName = `pictures/${h}.${ext}`;
 
     let hasError = false;
     hasError = await addPicture({
@@ -40,7 +42,7 @@ pictureForm.addEventListener("submit", async (event) => {
     console.log("im called back");
     imgRef.put(file).then((snap) => {
       console.log("image is uploaded");
-      // closePictureModal();
+      //closePictureModal();
     });
   };
   calculateMd5(file, callback);

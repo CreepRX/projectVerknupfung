@@ -1,3 +1,6 @@
+let loginErrModal = new bootstrap.Modal(document.getElementById('login-alert-modal'))
+
+
 let poetryBtn = document.querySelector('#poetry-post-btn')
 let poetryModal = new bootstrap.Modal(document.getElementById('poetry-modal'))
 poetryBtn.addEventListener('click' , event => {

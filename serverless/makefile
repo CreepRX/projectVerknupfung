@@ -1,5 +1,5 @@
 emulate:
-	export GOOGLE_APPLICATION_CREDENTIALS="/mnt/c/Users/ghibran/workspace/fullstack/projectVerknupfung/serverless/secretKey.json"
+	export GOOGLE_APPLICATION_CREDENTIALS="./secretKey.json"
 	firebase emulators:start
 
 

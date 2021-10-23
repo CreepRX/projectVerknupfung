@@ -1,0 +1,3 @@
+*.log
+serverless/secretKey.json
+.vscode/*

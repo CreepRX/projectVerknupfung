@@ -51,6 +51,7 @@ exports.addPoetry = functions
       mood: mood,
       createdAt: time,
       poetUID: poetUID,
+      hasPic: false,
     });
     return "OK";
   });
@@ -66,7 +67,7 @@ exports.addUserToDB = functions.auth.user().onCreate((user) => {
 exports.getPoetry = functions
   .region("europe-west1")
   .https.onCall(async (data, context) => {
-    return admin
+    let poetry = await admin
       .firestore()
       .collection("poetry")
       .orderBy("createdAt", "desc")
@@ -87,6 +88,47 @@ exports.getPoetry = functions
           "cannot find any poetry " + err.message
         );
       });
+
+    if (poetry.length === 0) {
+      return poetry;
+    }
+
+    let r = [];
+
+    for (let i = 0; i < poetry.length; i++) {
+      const p = poetry[i];
+      let users = [];
+      console.log(p);
+      console.log(p["poetUID"]);
+      let poet = await admin
+        .firestore()
+        .collection("users")
+        .doc(p["poetUID"])
+        .get()
+        .then((snap) => {
+          return snap.data();
+        });
+
+      users.push(poet);
+
+      if (p["hasPic"]) {
+        let picOwner = await admin
+          .firestore()
+          .collection("users")
+          .doc(p["painterUID"])
+          .get()
+          .then((snap) => {
+            return snap.data();
+          });
+        users.push(picOwner);
+      }
+
+      p['users'] = users
+
+      r.push(p);
+    }
+
+    return r;
   });
 
 exports.getUser = functions
@@ -146,18 +188,18 @@ exports.matchPicWithPoetry = functions.firestore
   .document("pictures/{pictureID}")
   .onCreate((snap, context) => {
     const entry = snap.data();
-    // console.log("=====matching pic with poetry======");
 
     const fileName = entry.fileName;
     const mood = entry.mood;
     const painter = entry.ownerUID;
 
-    const callback = function(id,data){
-      admin.firestore().collection('poetry').doc(id).update({
-        picture : fileName,
-        painterUID : painter,
-      })
-    }
+    const callback = function (id, data) {
+      admin.firestore().collection("poetry").doc(id).update({
+        picture: fileName,
+        painterUID: painter,
+        hasPic: true,
+      });
+    };
 
     admin
       .firestore()
@@ -170,10 +212,10 @@ exports.matchPicWithPoetry = functions.firestore
         // console.log("=====matching pic with poetry======");
 
         snaps.forEach((doc) => {
-          const data = doc.data()
-          if (!data['picture'] || data['picture'] === ''){
-            callback(doc.id, data)
-            return
+          const data = doc.data();
+          if (data["hasPic"] === "false" || !data["hasPic"]) {
+            callback(doc.id, data);
+            return;
           }
         });
       });
