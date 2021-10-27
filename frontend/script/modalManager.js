@@ -20,9 +20,8 @@ const closePoetryModal = function(){
 
 let pictureBtn = document.getElementById('picture-post-btn')
 let pictureModal = new bootstrap.Modal(document.getElementById('picture-modal'))
-console.log(pictureBtn)
 pictureBtn.addEventListener('click' , event => {
-   console.log('hello')
+
    if(localStorage.getItem('isLoggedIn') === 'false'){
        loginErrModal.show()
        return

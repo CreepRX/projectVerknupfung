@@ -12,7 +12,6 @@ loginbutton.addEventListener('click', e =>{
         let token = credential.accessToken;
     // The signed-in user info.
         let user = res.user;
-        console.log(user)
 
  
     })

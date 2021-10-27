@@ -7,7 +7,6 @@ const loadFeed = async function(){
  
  
      datas.forEach( async data => {
-        console.log(data)
 
      const html = await generatePost(data['title'],data['content'],data['hasPic'],data['picture'], data['users'])
        contentFeed.innerHTML += html
@@ -18,10 +17,8 @@ const loadFeed = async function(){
 
 const generatePost = async function (title, content, hasPic, picture, users){
    
-    console.log(users)
      poet = users[0]
  
-     console.log(poet)
      const poetIMG = poet.profilePic
      const poetName = poet.name
  
@@ -32,12 +29,10 @@ const generatePost = async function (title, content, hasPic, picture, users){
        const picOwner = users[1]
  
  
-       console.log("hello world")
        imgURL = await storage.ref(picture).getDownloadURL().then(
           url => url
        )
  
-       console.log(imgURL)
        picOwnerIMG = picOwner.profilePic
        picOwnerName = picOwner.name
      }

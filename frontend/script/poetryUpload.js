@@ -7,7 +7,6 @@ poetryForm.addEventListener('submit', e =>{
     let title = poetryForm['title'].value
     let content = poetryForm['content'].value
     let mood = poetryForm['mood'].value
-    console.log(title +'\n'+ content+ '\n' + mood)
 
     const addPoetry = func.httpsCallable("addPoetry")
 
@@ -21,7 +20,7 @@ poetryForm.addEventListener('submit', e =>{
         closePoetryModal()
         poetryForm.reset()
     }).catch(err => {
-        console.log(err)
+
         errorMsg.innerHTML = err.message;
     })
 

@@ -24,7 +24,6 @@ pictureForm.addEventListener("submit", async (event) => {
       link: fileName,
     })
       .then((e) => {
-        console.log("pic is in database");
         return false;
       })
       .catch((err) => {
@@ -34,7 +33,7 @@ pictureForm.addEventListener("submit", async (event) => {
       });
 
     if (hasError) {
-      console.log("has error");
+
       return;
     }
 
