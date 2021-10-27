@@ -2,7 +2,7 @@
 
 const pictureForm = document.querySelector("#file-upload-form");
 const picErrorMsg = pictureForm.querySelector("#error-msg2");
-console.log(pictureForm)
+
 
 
 pictureForm.addEventListener("submit", async (event) => {
@@ -38,9 +38,7 @@ pictureForm.addEventListener("submit", async (event) => {
     }
 
     const imgRef = storageRef.child(fileName);
-    console.log("im called back");
     imgRef.put(file).then((snap) => {
-      console.log("image is uploaded");
       //closePictureModal();
     });
   };
