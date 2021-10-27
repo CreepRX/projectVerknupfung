@@ -1,12 +1,11 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const sanitizer = require("sanitizer");
-const { array } = require("yargs");
 admin.initializeApp();
 
 exports.helloWorld = functions
   .region("europe-west1")
-  .https.onCall((data, context) => {
+  .https.onCall((dkata, context) => {
     return "Hello world";
   });
 
