@@ -199,21 +199,20 @@
          <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
          
          <script>
-            const config = {
-               apiKey: "AIzaSyC9Bb__n0bLn3GOxEIthCnc_2pEDRUsfNk",
-               authDomain: "projectverknupfung.firebaseapp.com",
-               projectId: "projectverknupfung",
-               storageBucket: "projectverknupfung.appspot.com",
-               messagingSenderId: "327702661691",
-               appId: "1:327702661691:web:ad2e907f34cc9e147c2a1e",
-               measurementId: "G-9E6TNSMYZ1",
-               storageBucket: 'projectVerknupfung.appspot.com.'
-            };
+             const config = {
+    apiKey: "AIzaSyC9Bb__n0bLn3GOxEIthCnc_2pEDRUsfNk",
+    authDomain: "projectverknupfung.firebaseapp.com",
+    projectId: "projectverknupfung",
+    storageBucket: "projectverknupfung.appspot.com",
+    messagingSenderId: "327702661691",
+    appId: "1:327702661691:web:c092160f239d657d7c2a1e",
+    measurementId: "G-8S0CWL98TM"
+  };
 
             // Initialize Firebase
             firebase.initializeApp(config)
             const auth = firebase.auth()
-            const func = firebase.functions();
+            const func = firebase.app().functions()
             const storage = firebase.storage()
 
             // if (location.hostname === "localhost" ||location.hostname === "127.0.0.1" ) {

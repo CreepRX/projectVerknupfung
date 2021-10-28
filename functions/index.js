@@ -100,9 +100,10 @@ exports.getPoetry = functions.https.onCall(async (data, context) => {
       .doc(p["poetUID"])
       .get()
       .then((snap) => {
+        console.log("hey");
         return snap.data();
       });
-
+    functions.logger.log(poet);
     users.push(poet);
 
     if (p["hasPic"]) {
@@ -121,6 +122,8 @@ exports.getPoetry = functions.https.onCall(async (data, context) => {
 
     r.push(p);
   }
+
+  functions.logger.log(r);
 
   return r;
 });
@@ -189,26 +192,23 @@ exports.matchPicWithPoetry = functions.firestore
         painterUID: painter,
         hasPic: true,
       });
-    };
 
-    admin
-      .firestore()
-      .collection("poetry")
-      .where("mood", "==", mood)
-      // .where("picture", "==", "")
-      .orderBy("createdAt", "asc")
-      .get()
-      .then((snaps) => {
-        // console.log("=====matching pic with poetry======");
+      admin
+        .firestore()
+        .collection("poetry")
+        .get()
+        .then((snaps) =>
+          snaps.query.where("mood", "==", mood).orderBy("createdAt").get()
+        )
+        .then((snaps) => {
+          snaps.forEach((doc) => {
+            const data = doc.data();
 
-        snaps.forEach((doc) => {
-          const data = doc.data();
-          if (data["hasPic"] === "false" || !data["hasPic"]) {
-            callback(doc.id, data);
-            return;
-          }
+            if (data["hasPic"] === "false" || !data["hasPic"]) {
+              callback(doc.id, data);
+              return;
+            }
+          });
         });
-      });
-
-    return "";
+    };
   });
