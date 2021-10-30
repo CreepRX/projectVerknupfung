@@ -73,7 +73,7 @@ const generatePost = async function (
 
   let isLiked = false;
 
-  if (localStorage.getItem("isLoggedIn")) {
+  if (localStorage.getItem("isLoggedIn") === 'true') {
     isLiked = await func
       .httpsCallable("checkLiked")({
         poetry: poetryId,
