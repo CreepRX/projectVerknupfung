@@ -42,7 +42,7 @@ pictureForm.addEventListener("submit", async (event) => {
     console.log("im called back");
     imgRef.put(file).then((snap) => {
       console.log("image is uploaded");
-      //closePictureModal();
+      closePictureModal();
     });
   };
   calculateMd5(file, callback);
