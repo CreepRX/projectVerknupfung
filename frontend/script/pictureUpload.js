@@ -39,7 +39,7 @@ pictureForm.addEventListener("submit", async (event) => {
 
     const imgRef = storageRef.child(fileName);
     imgRef.put(file).then((snap) => {
-      //closePictureModal();
+      closePictureModal();
     });
   };
   calculateMd5(file, callback);

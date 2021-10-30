@@ -1,61 +1,114 @@
-const loadFeed = async function(){
-    contentFeed.innerHTML = ''
-     
-     const datas = (await getFeed().then(res => {
-         return res
-     })).data
- 
- 
-     datas.forEach( async data => {
+const loadFeed = async function () {
+  contentFeed.innerHTML = "";
 
-     const html = await generatePost(data['title'],data['content'],data['hasPic'],data['picture'], data['users'])
-       contentFeed.innerHTML += html
-     });
- }
+  const datas = (
+    await getFeed().then((res) => {
+      return res;
+    })
+  ).data;
+
+  datas.forEach(async (data) => {
+
+    const html = await generatePost(
+      data["id"],
+      data["title"],
+      data["content"],
+      data["hasPic"],
+      data["picture"],
+      data["users"],
+      data["likes"]
+    );
+    contentFeed.innerHTML += html;
+  });
+};
+function nFormatter(num, digits) {
+  const lookup = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" }
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var item = lookup.slice().reverse().find(function(item) {
+    return num >= item.value;
+  });
+  return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+}
 
 
+const generatePost = async function (
+  poetryId,
+  title,
+  content,
+  hasPic,
+  picture,
+  users,
+  likes
+) {
 
-const generatePost = async function (title, content, hasPic, picture, users){
-   
-     poet = users[0]
- 
-     const poetIMG = poet.profilePic
-     const poetName = poet.name
- 
-     let picOwnerName = ' '
-     let imgURL = '/noPic.jpg'
-     let picOwnerIMG = '' 
-     if (hasPic){
-       const picOwner = users[1]
- 
- 
-       imgURL = await storage.ref(picture).getDownloadURL().then(
-          url => url
-       )
- 
-       picOwnerIMG = picOwner.profilePic
-       picOwnerName = picOwner.name
-     }
- 
-     const picID = "pic-" + Math.floor(Math.random() * 100000000)
-     const chevronID = "chev" + Math.floor(Math.random() * 1000000)
- 
- 
-     return `
+  poet = users[0];
+
+
+  const poetIMG = poet.profilePic;
+  const poetName = poet.name;
+
+  let picOwnerName = " ";
+  let imgURL = "/noPic.jpg";
+  let picOwnerIMG = "";
+  if (hasPic) {
+    const picOwner = users[1];
+
+
+    imgURL = await storage
+      .getDownloadURL()
+      .then((url) => url);
+
+
+    picOwnerIMG = picOwner.profilePic;
+    picOwnerName = picOwner.name;
+  }
+
+  let isLiked = false;
+
+  if (localStorage.getItem('isLoggedIn')){
+
+    isLiked = await func.httpsCallable('checkLiked')(
+      {
+        poetry: poetryId,
+      }
+    ).then(res => res.data['isLiked'])
+
+  }
+  const formattedLikes = nFormatter(likes, 3);
+
+
+  const likeID = "like-" + Math.floor(Math.random() * 10000);
+  const tLikeID = "tLike-" + Math.floor(Math.random() * 10000);
+  const heart = isLiked
+    ? `<i class="bi heart bi-heart-fill" onClick='like("${poetryId}","dislike", "${likeID}", "${tLikeID}")' ></i>`
+    : `<i class="bi heart bi-heart" onClick='like("${poetryId}","like","${likeID}","${tLikeID}")' ></i>`;
+
+  const picID = "pic-" + Math.floor(Math.random() * 10000);
+  const chevronID = "chev" + Math.floor(Math.random() * 10000);
+
+  return `
      <!-- content -->
                    <div class="post rounded shadow align-center mt-4">
                       <div class="pic-section m-0 rounded-top" id='${picID}' >
                          <img src="${imgURL}" alt="pic" srcset="">
                       </div>
                       <div class="text-section rounded-top row pt-3 pb-3">
-                         <div class="col-1 vote text-center">
-                            <a href="#" class="upvote">
-                               <i class="bi bi-caret-up" id="upvote"></i>
-                            </a>
-                            <small id="total-vote">25</small>
-                            <a href="" class="downvote">
-                               <i class="bi bi-caret-down" id="downvote"></i>
-                            </a>
+                         <div class="col-2 like-section text-center">
+                            ${
+                              localStorage.getItem("isLoggedIn") === "true"
+                                ? `<a href="#" id="${likeID}">${heart}</a></br>
+                                   <small id="${tLikeID}">${formattedLikes}</small>`
+                                : ""
+                            }
+
                          </div>
                          <div class="col-10">
                             <div class="top row">
@@ -75,10 +128,13 @@ const generatePost = async function (title, content, hasPic, picture, users){
                                   <small class="poet-name">${poetName}</small>
                                </div>
                                <div class="col-12 col-lg-6">
-                                  ${hasPic ? `
+                                  ${
+                                    hasPic
+                                      ? `
                                      <small class=""> Picture by</small>
                                      <img class="rounded-circle" src="${picOwnerIMG}" width="30px">`
-                                     : '<small class=""> No picture yet</small>'}
+                                      : '<small class=""> No picture yet</small>'
+                                  }
                                   <small class="poet-name">${picOwnerName}</small>
                                </div>
                             </div>
@@ -86,6 +142,5 @@ const generatePost = async function (title, content, hasPic, picture, users){
                          <div class="col-1"></div>
                       </div>
                    </div>
-     `
- }
- 
+     `;
+};
