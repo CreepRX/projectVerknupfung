@@ -8,7 +8,6 @@ const loadFeed = async function () {
   ).data;
 
   datas.forEach(async (data) => {
-
     const html = await generatePost(
       data["id"],
       data["title"],
@@ -29,15 +28,19 @@ function nFormatter(num, digits) {
     { value: 1e9, symbol: "G" },
     { value: 1e12, symbol: "T" },
     { value: 1e15, symbol: "P" },
-    { value: 1e18, symbol: "E" }
+    { value: 1e18, symbol: "E" },
   ];
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  var item = lookup.slice().reverse().find(function(item) {
-    return num >= item.value;
-  });
-  return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+  var item = lookup
+    .slice()
+    .reverse()
+    .find(function (item) {
+      return num >= item.value;
+    });
+  return item
+    ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
+    : "0";
 }
-
 
 const generatePost = async function (
   poetryId,
@@ -48,9 +51,7 @@ const generatePost = async function (
   users,
   likes
 ) {
-
   poet = users[0];
-
 
   const poetIMG = poet.profilePic;
   const poetName = poet.name;
@@ -61,11 +62,10 @@ const generatePost = async function (
   if (hasPic) {
     const picOwner = users[1];
 
-
     imgURL = await storage
+      .ref(picture)
       .getDownloadURL()
       .then((url) => url);
-
 
     picOwnerIMG = picOwner.profilePic;
     picOwnerName = picOwner.name;
@@ -73,17 +73,14 @@ const generatePost = async function (
 
   let isLiked = false;
 
-  if (localStorage.getItem('isLoggedIn')){
-
-    isLiked = await func.httpsCallable('checkLiked')(
-      {
+  if (localStorage.getItem("isLoggedIn")) {
+    isLiked = await func
+      .httpsCallable("checkLiked")({
         poetry: poetryId,
-      }
-    ).then(res => res.data['isLiked'])
-
+      })
+      .then((res) => res.data["isLiked"]);
   }
   const formattedLikes = nFormatter(likes, 3);
-
 
   const likeID = "like-" + Math.floor(Math.random() * 10000);
   const tLikeID = "tLike-" + Math.floor(Math.random() * 10000);
