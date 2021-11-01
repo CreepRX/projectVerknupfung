@@ -1,3 +1,4 @@
+
 const loadFeed = async function () {
   contentFeed.innerHTML = "";
 
@@ -62,8 +63,8 @@ const generatePost = async function (
   if (hasPic) {
     const picOwner = users[1];
 
-    imgURL = await storage
-      .ref(picture)
+    console.log("hello world");
+    imgURL = await storage.ref(picture)
       .getDownloadURL()
       .then((url) => url);
 

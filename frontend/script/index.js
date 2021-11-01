@@ -3,7 +3,7 @@ const getUser = func.httpsCallable("getUser")
 const getFeed = func.httpsCallable("getPoetry")
 
 const contentFeed = document.querySelector('#content')
-
+const about = document.querySelector('#about-us')
 loadFeed()
 
 const expandPic = function(picID, chevronID){

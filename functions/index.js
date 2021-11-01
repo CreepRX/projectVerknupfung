@@ -174,38 +174,44 @@ exports.addPicture = functions.https.onCall(async (data, context) => {
 
 exports.matchPicWithPoetry = functions.firestore
   .document("pictures/{pictureID}")
-  .onCreate((snap, context) => {
+  .onCreate(async (snap, context) => {
     const entry = snap.data();
+
+    functions.logger.log("hey");
 
     const fileName = entry.fileName;
     const mood = entry.mood;
     const painter = entry.ownerUID;
 
-    const callback = function (id, data) {
-      admin.firestore().collection("poetry").doc(id).update({
+    // const callback = function (id, data) {
+
+    //   });
+
+    functions.logger.log("hey2");
+
+    const id = await admin
+      .firestore()
+      .collection("poetry")
+      .get()
+      .then((snaps) =>
+        snaps.query
+          .where("mood", "==", mood)
+          .where("hasPic", "==", false)
+          .orderBy("createdAt")
+          .get()
+      )
+      .then((snap) => {
+        functions.logger.log(snap.docs);
+
+        return snap.docs[0].id;
+      });
+    
+
+      return await admin.firestore().collection("poetry").doc(id).update({
         picture: fileName,
         painterUID: painter,
         hasPic: true,
-      });
-
-      admin
-        .firestore()
-        .collection("poetry")
-        .get()
-        .then((snaps) =>
-          snaps.query.where("mood", "==", mood).orderBy("createdAt").get()
-        )
-        .then((snaps) => {
-          snaps.forEach((doc) => {
-            const data = doc.data();
-
-            if (data["hasPic"] === "false" || !data["hasPic"]) {
-              callback(doc.id, data);
-              return;
-            }
-          });
-        });
-    };
+      })
   });
 
 exports.like = functions.https.onCall(async (data, context) => {
